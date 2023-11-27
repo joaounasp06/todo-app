@@ -8,15 +8,15 @@
 :root {
     --bg-header-mobile: url(../imagens/bg-header-mobile-light.png);
     --bg-header-desktop: url(../imagens/bg-header-desktop-light.png);
-    --input-box-shadow: rgba(194, 195, 214, 0.50);
+    --input-box-shadow:  rgba(194, 195, 214, 0.50);
     --input-color: #494C6B;
-    --input-bg: #fff;
+    --input-bg: #FFF;
     --placeholder-color: #9495A5;
     --button-color: #494C6B;
     --button-color-hover: #393A4B;
     --bg-body: #FAFAFA;
-    --bg-tarefas: #fff;
-    --box-shadow: box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.50);
+    --bg-tarefas: #FFF;
+    --box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.50);
     --border-color: #E3E4F1;
     --text-color: #494C6B;
     --info-text-color: #9495A5;
@@ -27,21 +27,20 @@
 body.dark {
     --bg-header-mobile: url(../imagens/bg-header-mobile-dark.png);
     --bg-header-desktop: url(../imagens/bg-header-desktop-dark.png);
-    --input-box-shadow: rgba(0, 0, 0, 0.50);
+    --input-box-shadow:  rgba(0, 0, 0, 0.50);    ;
     --input-color: #C8CBE7;
     --input-bg: #25273D;
     --placeholder-color: #767992;
-    --button-color: #5B5E7E;
-    --button-color-hover: #25273D;
+    --button-color: #25273D;
+    --button-color-hover: #5B5E7E;
     --bg-body: #171823;
     --bg-tarefas: #25273D;
-    --box-shadow: box-shadow: 0px 35px 50px -15px rgba(0, 0, 0, 0.50);
+    --box-shadow: 0px 35px 50px -15px rgba(0, 0, 0, 0.50);
     --border-color: #393A4B;
     --text-color: #C8CBE7;
     --info-text-color: #5B5E7E;
     --info-button-hover: #E3E4F1;
     --info-button-active: #3A7CFD;
-
 }
 
 body {
@@ -56,21 +55,11 @@ header {
     height: 12.5rem;
 
     padding: 3rem 1.75rem 0;
-
 }
 
 header > div {
     max-width: 33.75rem;
     margin-inline: auto;
-}
-
-header div div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-bottom: 2.5rem;
-
 }
 
 header button {
@@ -79,10 +68,17 @@ header button {
     cursor: pointer;
 }
 
-header div h1 {
-    color: #fff;
-    text-transform: uppercase;
+header div div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
+    margin-bottom: 2.5rem;
+}
+
+header div h1 {
+    color: #FFF;
+    text-transform: uppercase;
 }
 
 header form {
@@ -100,7 +96,6 @@ header form input {
     font-size: 0.75rem;
     color: var(--input-color);
     background: var(--input-bg);
-
 }
 
 header form input::placeholder {
@@ -112,12 +107,10 @@ header form button {
     border-radius: 0.3125rem;
     border: none;
     background: var(--button-color);
-    color: #fff;
-
+    color: #FFF;
 }
 
 main {
-
     padding-inline: 1.75rem;
 }
 
@@ -132,17 +125,15 @@ main {
 
 .tarefas .tarefa {
     padding: 1rem 1.25rem;
-    
 }
 
-.tarefa .tarefa + .tarefa {
+.tarefas .tarefa + .tarefa {
     border-top: 1px solid var(--border-color);
 }
 
 .tarefa form {
     display: flex;
     justify-content: space-between;
-
 }
 
 .tarefa div {
@@ -153,7 +144,6 @@ main {
     color: var(--text-color);
     font-size: 0.75rem;
 }
-
 
 .tarefa button {
     border: none;
@@ -175,6 +165,9 @@ main {
     color: var(--info-text-color);
 }
 
+.informacoes .botoes {
+    display: none;
+}
 
 .botoes {
     padding-block: 1rem;
@@ -183,6 +176,7 @@ main {
     margin-top: 1rem;
     max-width: 33.75rem;
     margin-inline: auto;
+
     display: flex;
     justify-content: center;
     gap: 1.2rem;
@@ -193,7 +187,6 @@ main {
 .botoes .active {
     color: var(--info-button-active);
 }
-
 
 @media(min-width: 1000px) {
     header {
@@ -217,8 +210,7 @@ main {
 
     header form button:hover {
         cursor: pointer;
-        background:  var(--button-color-hover);
-
+        background: var(--button-color-hover);
     }
 
     .tarefas {
@@ -233,44 +225,36 @@ main {
         font-size: 1.125rem;
     }
 
-
-
     section.botoes {
         display: none;
     }
 
-    .informacoes.botoes {
+    .informacoes .botoes {
         display: flex;
         padding: 0;
         margin: 0;
-
-        
+        gap: 2rem;
     }
 
     .informacoes {
         font-size: 0.875rem;
     }
-    
 
     .informacoes a:hover {
-        color: var(--info-button-hover);
+        color: var(--info-button-hover)
     }
 
     .tarefa button {
         visibility: hidden;
     }
 
-
     .tarefa input:hover,
-    .tarefa label:hover, 
+    .tarefa label:hover,
     .tarefa button:hover {
         cursor: pointer;
     }
 
     .tarefa:hover button {
         visibility: initial;
-
     }
-
-
 }

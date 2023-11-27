@@ -5,29 +5,28 @@ function alterarTema() {
 
     if (tema) {
         let novoTema
-        
+
         if (tema === "light") {
             novoTema = "dark"
-            button.innerHTML = `<img src="/imagens/sun-icon.png" alt="icone do Sol">`
+            button.innerHTML = `<img src="/imagens/sun-icon.png" alt="ícone de Sol.">`
             body.classList.remove("light")
             body.classList.add("dark")
-            
         } else {
             novoTema = "light"
-            button.innerHTML = `<img src="/imagens/moon-icon.png" alt="icone de Lua">`
+            button.innerHTML = `<img src="/imagens/moon-icon.png" alt="ícone de Lua.">`
             body.classList.remove("dark")
             body.classList.add("light")
         }
 
-
-        localStorege.setItem("tema", novoTema)
+        localStorage.setItem("tema", novoTema)
         return
-        
     }
 
     localStorage.setItem("tema", "dark")
     body.classList.add("dark")
 }
+
+
 
 function verificarTema() {
     const tema = localStorage.getItem("tema")
@@ -37,15 +36,12 @@ function verificarTema() {
     if (tema) {
         if (tema === "dark") {
             body.classList.add("dark")
-            button.innerHTML = `<img src="/imagens/sun-icon.png" alt="icone do Sol">`
-
+            button.innerHTML = `<img src="/imagens/sun-icon.png" alt="ícone do Sol.">`
         } else {
             body.classList.add("light")
-            button.innerHTML = `<img src="/imagens/moon-icon.png" alt="icone de Lua">`
-            
+            button.innerHTML = `<img src="/imagens/moon-icon.png" alt="ícone de Lua.">`
         }
     }
 }
 
 verificarTema()
-
