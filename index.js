@@ -9,8 +9,92 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 
+// converter dados do formulário em objetos javascrip
+app.use(express.urlencoded({
+    extended: true
+}))
+
+
+app.use(express.json())
+
+// rotas
+app.post('/completar', (requisicao, resposta) => {
+    const id = requisicao.body.id
+
+    const sql = `
+        UPDATE tarefas 
+        SET completa = '1'
+        WHERE id = ${id}
+    `
+
+    conexao.query(sql, (erro) => {
+        if (erro) {
+            return console.log(erro)
+        }
+
+        resposta.redirect('/')
+    })
+})
+
+app.post('/descompletar', (requisicao, resposta) => {
+    const id = requisicao.body.id
+
+    const sql = `
+        UPTADE tarefas
+        SET completa = '0'
+        WHERE id = ${id}
+    `
+
+    conexao.query(sql, (erro) => {
+        if (erro) {
+            return console.log(erro)
+        }
+
+        resposta.redirect('/')
+    })
+})
+
+app.post('/criar', (requisicao, resposta) => {
+    const descricao = requisicao.body.descricao
+    const completa = 0
+
+    const sql = `
+        INSERT INTO tarefas(descricao, completa)
+        VALUES('${descricao}', '${completa}')
+    `
+    conexao.query(sql), (erro) => {
+        if (erro) {
+            return console.log(erro)
+        }
+
+        resposta.redirect('/')
+    } 
+})
+
 app.get('/', (requisicao, resposta) => {
-    resposta.render('home')
+    const set = 'SELECT * FROM tarefas'
+
+    conexao.query(sql, (erro, dados) => {
+        if (erro) {
+            return console.log(erro)
+        }
+
+        const tarefas = dados.map((dado) => {
+            return {
+                id: dado.id,
+                descricao: dado.descricao,
+                completa: dado.completa === 0 ? false : true
+            }
+        }) 
+
+        const tarefasAtivas = tarefas.filter((tarefa) => {
+            return tarefa.completa === false && tarefa
+        })
+
+        const quantidadeTarefasAtivas = tarefasAtivas.length
+
+        resposta.render('home', { tarefas, quantidadeTarefasAtivas })
+    })
 })
 
 const conexao = mysql.createConnection ({
