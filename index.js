@@ -9,7 +9,49 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 
+// converter dados do formulário em objetos javascrip
+app.use(express.urlencoded({
+    extended: true
+}))
+
+
+app.use(express.json())
+// rotas
+app.post('/criar', (requisicao, resposta) => {
+    const descricao = requisicao.body.descricao
+    const completa = 0
+
+    const sql = `
+        INSERT INTO tarefas(descricao, completa)
+        VALUES('${descricao}', '${completa}')
+    `
+    conexao.query(sql), (erro) => {
+        if (erro) {
+            return console.log(erro)
+        }
+
+        resposta.redirect('/')
+    } 
+})
+
 app.get('/', (requisicao, resposta) => {
+    const set = 'SELECT * FROM tarefas'
+
+    conexao.query(sql, (erro, dados) => {
+        if (erro) {
+            return console.log(erro)
+        }
+
+        const tarefas = dados.map((dado) => {
+            return {
+                id: dado.id,
+                descricao: dado.descricao,
+                completa: dado.completa === 0 ? false : true
+            }
+        }) 
+
+    })
+
     resposta.render('home')
 })
 
