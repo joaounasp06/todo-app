@@ -95,7 +95,7 @@ const conexao = mysql.createConnection({
     host: "localhost",
     user:"root",
     password:"root",
-    database:"todo.app",
+    database:"todoapp",
     // Caso o banco de dados esteja rodando na porta 3307 é necessario mudar a port a baixo para port: 3307
     port: 3306
 })
@@ -187,6 +187,19 @@ app.post('/excluir', (req,res)=>{
     conexao.query(sql, (erro)=>{
         if(erro) {
             return console.log(erro)
+        }
+
+        res.redirect('/')
+    })
+})
+
+app.get('/limparTarefas', (req,res)=>{
+    const sql = `
+        DELETE FROM tarefas
+    `
+    conexao.query(sql, (erro)=>{
+        if (erro){
+            console.log(erro)
         }
 
         res.redirect('/')
