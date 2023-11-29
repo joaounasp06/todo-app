@@ -22,7 +22,7 @@ const conexao = mysql.createConnection({
     host: "localhost",
     user:"root",
     password:"root",
-    database:"todo.app",
+    database:"todoapp",
     // Caso o banco de dados esteja rodando na porta 3307 é necessario mudar a port a baixo para port: 3307
     port: 3306
 })
