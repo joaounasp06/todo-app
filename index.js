@@ -55,6 +55,7 @@ app.get('/ativas', (req,res)=>{
     })
 })
 
+
 app.get('/completas', (req,res)=>{
     const sql = `
         SELECT * FROM tarefas
@@ -168,6 +169,23 @@ app.post('/descompletar',(req,res)=>{
 
     conexao.query(sql, (erro)=>{
         if (erro) {
+            return console.log(erro)
+        }
+
+        res.redirect('/')
+    })
+})
+
+app.post('/excluir', (req,res)=>{
+    const id = req.body.id
+
+    const sql = `
+        DELETE FROM tarefas
+        WHERE id = ${id} 
+    `
+
+    conexao.query(sql, (erro)=>{
+        if(erro) {
             return console.log(erro)
         }
 
