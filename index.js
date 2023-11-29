@@ -3,9 +3,57 @@ const app = express()
 const mysql = require("mysql2")
 
 app.get("/", (req,res)=>{
-    res.render('home')
+    const sql = 'SELECT * FROM tarefas'
+
+    conexao.query(sql,(erro,dados)=>{
+        if (erro) {
+            return console.log(erro)
+        }
+
+        const tarefas = dados.map((dado)=>{
+            // Convertendo cada um dos itens da lista em um objeto que tem true ou false
+            return{
+                id: dado.id,
+                descricao: dado.descricao,
+                completa: dado.completa === 0 ? false : true
+            }
+        })
+
+        const tarefasAtivas = tarefas.filter((tarefa)=>{
+           return tarefa.completa === false && tarefa
+        })
+
+        const quantidadeTarefasAtivas = tarefasAtivas.length
+
+        res.render('home',{ tarefas, quantidadeTarefasAtivas })
+
+    })
 })
 
+app.get('/ativas', (req,res)=>{
+    const sql = `
+        SELECT * FROM tarefas
+        WHERE completa = 0
+    `
+
+    conexao.query(sql, (erro,dados)=>{
+        if (erro){
+            return console.log(erro)
+        }
+
+        const tarefas = dados.map((dado)=>{
+            return{
+                id: dado.id,
+                descricao: dado.descricao,
+                completa: false
+            }
+        })
+
+        const quantidadeTarefas = tarefas.length
+
+        res.render('ativas', { tarefas, quantidadeTarefas})
+    })
+})
 
 
 // --Configurando o Handlebars 
@@ -22,7 +70,7 @@ const conexao = mysql.createConnection({
     host: "localhost",
     user:"root",
     password:"root",
-    database:"todoapp",
+    database:"todo.app",
     // Caso o banco de dados esteja rodando na porta 3307 é necessario mudar a port a baixo para port: 3307
     port: 3306
 })
@@ -47,7 +95,8 @@ app.use(express.urlencoded({
 
 app.use(express.json())
 
-// ROTAS
+// ROTAS para realizar o CRUD
+
 app.post("/criar", (req,res)=>{
     const descricao= req.body.descricao 
     const completa = 0
@@ -59,6 +108,42 @@ app.post("/criar", (req,res)=>{
 
     conexao.query(sql, (erro)=>{
         if (erro){
+            return console.log(erro)
+        }
+
+        res.redirect('/')
+    })
+})
+
+app.post('/completar', (req,res)=>{
+    const id = req.body.id
+
+    const sql = `
+        UPDATE tarefas
+        SET completa = '1'
+        WHERE id = ${id}
+    `
+
+    conexao.query(sql, (erro)=>{
+        if (erro) {
+            return console.log(erro)
+        }
+
+        res.redirect('/')
+    })
+})
+
+app.post('/descompletar',(req,res)=>{
+    const id = req.body.id
+
+    const sql = `
+        UPDATE tarefas
+        SET completa = '0'
+        WHERE id = ${id}
+    `
+
+    conexao.query(sql, (erro)=>{
+        if (erro) {
             return console.log(erro)
         }
 
